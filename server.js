@@ -14,6 +14,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use("/api/auth", require("./routes/auth"));
 
 // Health check route - confirms the server is running
 app.get("/", (req, res) => {
@@ -21,6 +22,8 @@ app.get("/", (req, res) => {
         message: "ApexLog API is running"
     });
 });
+
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
