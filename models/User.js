@@ -29,11 +29,38 @@ const userSchema = new mongoose.Schema(
     },
     goal: {
       type: String,
+      enum: [
+        "Build Muscle",
+        "Lose Weight",
+        "Improve Endurance",
+        "Stay Active",
+        "Increase Strength",
+      ],
       default: "Build Muscle",
     },
     height: {
       type: String,
       default: "",
+    },
+    weight: {
+      type: String,
+      default: "",
+    },
+    // Tracks User onboarding activities
+    hasOnboarded: {
+      type: Boolean,
+      default: false,
+    },
+    // Preffered wight unit
+    weightUnit: {
+      type: String,
+      enum: ["kg", "lbs"],
+      default: "kg",
+    },
+    // Notification preferences
+    notifications: {
+      type: Boolean,
+      default: "true",
     },
   },
   {
@@ -43,9 +70,9 @@ const userSchema = new mongoose.Schema(
 
 // Hash password before saving (Runs only when password is modified)
 userSchema.pre("save", async function () {
-    if (!this.isModified("password")) return;
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+  if (!this.isModified("password")) return;
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
 // Compares a plain password against the stored hash

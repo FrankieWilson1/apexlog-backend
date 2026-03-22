@@ -42,6 +42,13 @@ const register = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      goal: user.goal,
+      weight: user.weight,
+      height: user.height,
+      avatar: user.avatar,
+      weightUnit: user.weightUnit,
+      notifications: user.notifications,
+      hasOnboarded: user.hasOnboarded,
       token: generateToken(user._id),
     });
   } catch (error) {
@@ -73,6 +80,9 @@ const login = async (req, res) => {
       goal: user.goal,
       height: user.height,
       weight: user.weight,
+      weightUnit: user.weightUnit,
+      notifications: user.notifications,
+      hasOnboarded: user.hasOnboarded,
       avatar: user.avatar,
       token: generateToken(user._id),
     });
