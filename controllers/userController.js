@@ -48,6 +48,7 @@ const updateProfile = async (req, res) => {
     if (avatar !== undefined) user.avatar = avatar;
     if (weightUnit !== undefined) user.weightUnit = weightUnit;
     if (hasOnboarded !== undefined) user.hasOnboarded = hasOnboarded;
+    if (notifications !== undefined) user.notifications = notifications;
 
     const updatedUser = await user.save();
 
