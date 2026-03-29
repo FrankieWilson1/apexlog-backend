@@ -84,6 +84,7 @@ const login = async (req, res) => {
       notifications: user.notifications,
       hasOnboarded: user.hasOnboarded,
       avatar: user.avatar,
+      createdAt: user.createdAt,
       token: generateToken(user._id),
     });
   } catch (error) {

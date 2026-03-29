@@ -92,9 +92,24 @@ const deleteWorkout = async (req, res) => {
   }
 };
 
+//_______________________________________________
+// @route DELETE /api/workouts/all
+// @access Private
+// @desc Deletes all workouts fro the logged in user
+const deleteAllWorkouts = async (req, res) => {
+  try {
+    await Workout.deleteMany({ user: req.user._id });
+    res.json({ message: "All workouts cleared" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   getWorkouts,
   createWorkout,
   getWorkoutById,
   deleteWorkout,
+  deleteAllWorkouts,
 };

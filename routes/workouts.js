@@ -6,9 +6,12 @@ const {
   createWorkout,
   getWorkoutById,
   deleteWorkout,
+  deleteAllWorkouts,
 } = require("../controllers/workoutController");
 
 router.route("/").get(protect, getWorkouts).post(protect, createWorkout);
+
+router.route("/all").delete(protect, deleteAllWorkouts);
 
 router
   .route("/:id")
