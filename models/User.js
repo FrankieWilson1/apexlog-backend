@@ -60,7 +60,7 @@ const userSchema = new mongoose.Schema(
     // Notification preferences
     notifications: {
       type: Boolean,
-      default: "true",
+      default: true,
     },
   },
   {

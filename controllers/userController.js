@@ -85,7 +85,9 @@ const updatedPassword = async (req, res) => {
 
     // Checks for password character length
     if (newPassword.length < 6) {
-      return;
+      return res.status(400).json({
+        message: "password must be at least 6 characters",
+      });
     }
 
     const user = await User.findById(req.user._id);
