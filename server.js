@@ -2,6 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const connectDB = require("./config/db");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 // Load environment variables before anything else
 dotenv.config();
@@ -11,12 +13,27 @@ connectDB();
 
 const app = express();
 
-// Middleware
+//____ Secuirity Middleware ____
+// Helmet secures Express app by setting various HTTP headers
+app.use(helmet());
+
+// Rate limter specific to authentication routes to prevent
+// hackers from spamming thousands of password guesses
+const authLimiter = rateLimit({
+  windowsMs: 15 * 60 * 1000, // 15 minutes
+  max: 20, // Limit each IP to 20 requests per windowMs
+  message: {
+    message: "Too many login attempts. Please try again in 15 minutes.",
+  },
+});
+
+// ___ Standard Middleware___
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use("/api/auth", require("./routes/auth"));
+// __Routes__
+// authLimiter applied only to the auth routes
+app.use("/api/auth", authLimiter, require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/workouts", require("./routes/workouts"));
 
