@@ -49,6 +49,8 @@ const register = async (req, res) => {
       weightUnit: user.weightUnit,
       notifications: user.notifications,
       hasOnboarded: user.hasOnboarded,
+      restDuration: user.restDuration,
+      createdAt: user.createdAt,
       token: generateToken(user._id),
     });
   } catch (error) {
@@ -83,13 +85,14 @@ const login = async (req, res) => {
       weightUnit: user.weightUnit,
       notifications: user.notifications,
       hasOnboarded: user.hasOnboarded,
+      restDuration: user.restDuration,
       avatar: user.avatar,
       createdAt: user.createdAt,
       token: generateToken(user._id),
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Server error " });
+    res.status(500).json({ message: "Server error" });
   }
 };
 
