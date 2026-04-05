@@ -20,7 +20,7 @@ app.use(helmet());
 // Rate limter specific to authentication routes to prevent
 // hackers from spamming thousands of password guesses
 const authLimiter = rateLimit({
-  windows: 15 * 60 * 1000, // 15 munites
+  windowsMs: 15 * 60 * 1000, // 15 minutes
   max: 20, // Limit each IP to 20 requests per windowMs
   message: {
     message: "Too many login attempts. Please try again in 15 minutes.",
