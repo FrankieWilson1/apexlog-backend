@@ -27,7 +27,7 @@ const updateProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
 
-    if (!user) res.status(404).json({ message: "User not found" });
+    if (!user) return res.status(404).json({ message: "User not found" });
 
     // Update fields that were were actually sent.
     const {
@@ -39,6 +39,7 @@ const updateProfile = async (req, res) => {
       weightUnit,
       notifications,
       hasOnboarded,
+      restDuration,
     } = req.body;
 
     if (name !== undefined) user.name = name;
@@ -49,6 +50,7 @@ const updateProfile = async (req, res) => {
     if (weightUnit !== undefined) user.weightUnit = weightUnit;
     if (hasOnboarded !== undefined) user.hasOnboarded = hasOnboarded;
     if (notifications !== undefined) user.notifications = notifications;
+    if (restDuration !== undefined) user.restDuration = restDuration;
 
     const updatedUser = await user.save();
 
@@ -63,6 +65,7 @@ const updateProfile = async (req, res) => {
       weightUnit: updatedUser.weightUnit,
       notifications: updatedUser.notifications,
       hasOnboarded: updatedUser.hasOnboarded,
+      restDuration: updatedUser.restDuration,
     });
   } catch (error) {
     console.error(error);

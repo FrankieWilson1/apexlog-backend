@@ -62,6 +62,13 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    // Rest timmer duration
+    restDuration: {
+        type: Number,
+        default: 90,    // seconds
+        min: 10,
+        max: 600,
+    },
   },
   {
     timestamps: true,
