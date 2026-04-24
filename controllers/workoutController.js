@@ -1,4 +1,6 @@
 const Workout = require("../models/Workout");
+const PR = require("../models/PR");
+const { detectAndSavePRs } = require("./prController");
 
 //________________________________________________
 // @route GET /api/workouts
@@ -38,7 +40,14 @@ const createWorkout = async (req, res) => {
       exercises,
     });
 
-    res.status(201).json(workout);
+    // Detect PRs from the this workout - runs after save, non-blocking to UX
+    const newPRs = await detectAndSavePRs(req.user._id, exercises || [], date);
+
+    // Return the workout AND any new PRs detected
+    res.status(201).json({
+      workout,
+      newPRs,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

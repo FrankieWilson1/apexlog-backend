@@ -20,7 +20,7 @@ app.use(helmet());
 // Rate limter specific to authentication routes to prevent
 // hackers from spamming thousands of password guesses
 const authLimiter = rateLimit({
-  windowsMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 * 60 * 1000, // 15 minutes
   max: 20, // Limit each IP to 20 requests per windowMs
   message: {
     message: "Too many login attempts. Please try again in 15 minutes.",
@@ -36,6 +36,7 @@ app.use(express.json());
 app.use("/api/auth", authLimiter, require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/workouts", require("./routes/workouts"));
+app.use("/api/prs", require("./routes/prs"));
 
 // Health check route - confirms the server is running
 app.get("/", (req, res) => {
